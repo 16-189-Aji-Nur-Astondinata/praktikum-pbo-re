@@ -1,0 +1,44 @@
+import math
+
+class Kalkulator:
+    def __init__(self, nilai):
+        self.nilai = nilai
+
+    
+    def __add__(self, other):
+        return Kalkulator(self.nilai + other.nilai)
+
+    
+    def __sub__(self, other):
+        return Kalkulator(self.nilai - other.nilai)
+
+    
+    def __mul__(self, other):
+        return Kalkulator(self.nilai * other.nilai)
+
+   
+    def __truediv__(self, other):
+        return Kalkulator(self.nilai / other.nilai)
+
+   
+    def __pow__(self, other):
+        return Kalkulator(self.nilai ** other.nilai)
+
+    
+    def log(self):
+        return math.log(self.nilai)
+
+    def __str__(self):
+        return str(self.nilai)
+
+
+
+a = Kalkulator(10)
+b = Kalkulator(2)
+
+print("Penjumlahan:", (a + b))           # 10 + 2 = 12
+print("Pengurangan:", (a - b))          # 10 - 2 = 8
+print("Perkalian:", (a * b))            # 10 * 2 = 20
+print("Pembagian:", (a / b))            # 10 / 2 = 5.0
+print("Eksponen:", (a ** b))            # 10 ** 2 = 100
+print("Logaritma a:", a.log())          # log(10) = 2.3025...
