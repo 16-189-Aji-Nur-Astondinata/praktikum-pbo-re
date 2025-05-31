@@ -1,0 +1,95 @@
+from abc import ABC, abstractmethod
+
+# Kelas Abstrak
+class MakhlukHidup(ABC):
+    def __init__(self, identitas, usia):
+        if not identitas or not isinstance(usia, int) or usia < 0:
+            raise ValueError("Nama wajib diisi dan umur harus angka >= 0.")
+        self.__identitas = identitas
+        self.__usia = usia
+    
+    @abstractmethod
+    def mengeluarkan_suara(self):
+        pass
+    
+    def data_lengkap(self):
+        return f"{self.__identitas} ({self.__usia} tahun)"
+
+# Subclass dengan Polimorfisme
+class Anjing(MakhlukHidup):
+    def mengeluarkan_suara(self):
+        return "Guk guk!"
+
+class Kucing(MakhlukHidup):
+    def mengeluarkan_suara(self):
+        return "Meong!"
+
+class Gajah(MakhlukHidup):
+    def mengeluarkan_suara(self):
+        return "Trumpet!"
+
+# Manajemen Koleksi Hewan
+class TamanSatwa:
+    def __init__(self):
+        self.koleksi_satwa = []
+    
+    def masukkan_satwa(self, instance_satwa):
+        if not isinstance(instance_satwa, MakhlukHidup):
+            raise TypeError("Hanya objek turunan Hewan yang diizinkan.")
+        self.koleksi_satwa.append(instance_satwa)
+        print(f"{instance_satwa.data_lengkap()} berhasil dimasukkan ke kebun binatang.")
+    
+    def perlihatkan_satwa(self):
+        if not self.koleksi_satwa:
+            print("Belum ada hewan yang terdaftar.")
+        else:
+            print("\nDaftar Hewan di Kebun Binatang:")
+            for satwa in self.koleksi_satwa:
+                print(f"- {satwa.data_lengkap()} bersuara: {satwa.mengeluarkan_suara()}")
+
+# Fungsi utama
+def eksekusi_aplikasi():
+    taman = TamanSatwa()
+    
+    while True:
+        print("\nMenu Utama:")
+        print("1. Tambahkan Hewan")
+        print("2. Lihat Daftar Hewan")
+        print("3. Keluar")
+        
+        opsi_terpilih = input("Pilih opsi (1/2/3): ")
+        
+        try:
+            if opsi_terpilih == '1':
+                kategori_hewan = input("Jenis hewan (Anjing/Kucing/Gajah): ").strip().lower()
+                identitas_hewan = input("Nama hewan: ").strip()
+                usia_hewan = int(input("Umur hewan: "))
+                
+                if kategori_hewan == "anjing":
+                    objek_hewan = Anjing(identitas_hewan, usia_hewan)
+                elif kategori_hewan == "kucing":
+                    objek_hewan = Kucing(identitas_hewan, usia_hewan)
+                elif kategori_hewan == "gajah":
+                    objek_hewan = Gajah(identitas_hewan, usia_hewan)
+                else:
+                    raise ValueError("Jenis hewan tidak dikenali.")
+                
+                taman.masukkan_satwa(objek_hewan)
+            
+            elif opsi_terpilih == '2':
+                taman.perlihatkan_satwa()
+            
+            elif opsi_terpilih == '3':
+                print("Program selesai. Terima kasih.")
+                break
+            
+            else:
+                print("Opsi tidak tersedia. Masukkan angka 1-3.")
+        
+        except ValueError as error_nilai:
+            print(f"Kesalahan Input: {error_nilai}")
+        except Exception as error_umum:
+            print(f"Terjadi kesalahan: {error_umum}")
+
+if __name__ == "__main__":
+    eksekusi_aplikasi()
