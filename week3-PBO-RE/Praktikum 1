@@ -1,0 +1,23 @@
+import math
+
+def hitung_akar_kuadrat():
+    while True:
+        try:
+            angka_input = input("Masukkan angka: ")
+            nilai = float(angka_input)
+            
+            if nilai < 0:
+                raise ValueError("Input tidak valid. Harap masukkan angka yang positif.")
+            elif nilai == 0:
+                raise ZeroDivisionError("Error: Akar kuadrat dari nol tidak diperbolehkan.")
+            
+            hasil_akar = math.sqrt(nilai)
+            print(f"Akar kuadrat dari {int(nilai)} adalah {hasil_akar}")
+            break  # keluar dari loop jika berhasil
+            
+        except ValueError as error_value:
+            print(error_value)
+        except ZeroDivisionError as error_zero:
+            print(error_zero)
+        except:
+            print("Input tidak valid. Harap masukkan angka yang valid.")
